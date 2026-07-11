@@ -28,7 +28,7 @@ jobs:
       shell: pwsh
       run: |
         #1) Read PubVersion.json, increment build, and save
-        $pubVersionFile = Join-Path $env:GITHUB_WORKSPACE 'Pub/PubVersion.json'
+        $pubVersionFile = Join-Path $env:GITHUB_WORKSPACE 'pub/PubVersion.json'
         $pub = Get-Content $pubVersionFile -Raw | ConvertFrom-Json
         $v = [version]::Parse($pub.Version)
         $newV = [version]::new($v.Major, $v.Minor, ($v.Build + 1))
