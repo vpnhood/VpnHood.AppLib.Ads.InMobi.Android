@@ -14,7 +14,7 @@
 		<PackageReference Include="Square.Picasso" Version="2.8.0.20" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\VhInMobi\VpnHood.AppLib.Android.Ads.InMobi.csproj" />
+		<ProjectReference Include="..\VhInMobi\VpnHood.AppLib.Ads.InMobi.Android.csproj" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">
