@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write   # OIDC token for nuget.org trusted publishing (NuGet/login)
 
 jobs:
   build:
@@ -90,5 +91,16 @@ jobs:
     - name: Pack All Projects
       run: dotnet pack $PROJECT_NAME --configuration $BUILD_CONFIG -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
 
+    # Trusted publishing: exchange the workflow's OIDC token for a short-lived nuget.org API key
+    # (policy: vpnhood/VpnHood.AppLib.Ads.InMobi.Android + nuget-main.yml, created by trudyhood).
+    # The old NUGET_API_KEY_ADS secret could not push the renamed package id.
+    - name: NuGet login (trusted publishing)
+      if: github.event_name == 'push'
+      id: nuget_login
+      uses: NuGet/login@v1
+      with:
+        user: trudyhood
+
     - name: Publish
-      run: dotnet nuget push "**/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key ${{ secrets.NUGET_API_KEY_ADS }}
+      if: github.event_name == 'push'
+      run: dotnet nuget push "**/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key ${{ steps.nuget_login.outputs.NUGET_API_KEY }} --skip-duplicate
