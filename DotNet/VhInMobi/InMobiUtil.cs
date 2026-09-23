@@ -2,7 +2,7 @@
 using VpnHood.Core.Client.Device.Droid.Utils;
 using VpnHood.Core.Toolkit.Utils;
 
-namespace VpnHood.AppLib.Droid.Ads.VhInMobi;
+namespace VpnHood.AppLib.Ads.InMobi.Android;
 
 public class InMobiUtil
 {
