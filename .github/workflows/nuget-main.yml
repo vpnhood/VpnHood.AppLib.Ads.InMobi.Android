@@ -69,11 +69,17 @@ jobs:
       with:
         dotnet-version: 10.0.x
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v2
+    # The runner image already has the Android SDK; android-actions/setup-android@v2 broke when
+    # Google retired the SDK 'tools' package, so provision the way the VpnHood app builds do.
+    - name: Setup Java
+      uses: actions/setup-java@v5
+      with: { distribution: temurin, java-version: "17" }
 
-    - name: Android SDK
+    - name: Install .NET Android workload
       run: dotnet workload install android
+
+    - name: Provision Android SDK
+      run: dotnet build $PROJECT_NAME -t:InstallAndroidDependencies -p:AcceptAndroidSDKLicenses=True -p:AndroidSdkPath="$ANDROID_HOME"
 
     - name: Restore dependencies
       run: dotnet restore $PROJECT_NAME
