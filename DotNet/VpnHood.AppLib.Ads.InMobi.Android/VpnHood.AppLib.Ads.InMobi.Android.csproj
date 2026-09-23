@@ -18,8 +18,8 @@
 		<Company>OmegaHood LLC</Company>
 		<Copyright>© OmegaHood LLC. All rights reserved.</Copyright>
 		<PackageIcon>VpnHood.png</PackageIcon>
-		<PackageProjectUrl>https://github.com/vpnhood/VpnHood.AppLib.Android.Ads.InMobi</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/vpnhood/VpnHood.AppLib.Android.Ads.InMobi</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/vpnhood/VpnHood.AppLib.Ads.InMobi.Android</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/vpnhood/VpnHood.AppLib.Ads.InMobi.Android</RepositoryUrl>
 		<Version>7.4.777</Version>
 		<FileVersion>$([System.DateTime]::Now.ToString("yyyy.M.d.HHmm"))</FileVersion>
 		<BaseIntermediateOutputPath />

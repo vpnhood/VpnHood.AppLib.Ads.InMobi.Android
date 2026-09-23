@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\_publish.ps1 = ..\_publish.ps1
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VpnHood.AppLib.Ads.InMobi.Android", "VhInMobi\VpnHood.AppLib.Ads.InMobi.Android.csproj", "{4258F51D-4695-4E55-B0D3-CFA1E41B35B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VpnHood.AppLib.Ads.InMobi.Android", "VpnHood.AppLib.Ads.InMobi.Android\VpnHood.AppLib.Ads.InMobi.Android.csproj", "{4258F51D-4695-4E55-B0D3-CFA1E41B35B3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleShowAd", "SampleShowAd\SampleShowAd.csproj", "{083D71A3-C3EE-4C4B-9A7E-7D11CAC354EB}"
 EndProject

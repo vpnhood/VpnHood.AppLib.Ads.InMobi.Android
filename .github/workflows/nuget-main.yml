@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BUILD_CONFIG: 'Release'
-      PROJECT_NAME: 'DotNet/VhInMobi/VpnHood.AppLib.Ads.InMobi.Android.csproj'
+      PROJECT_NAME: 'DotNet/VpnHood.AppLib.Ads.InMobi.Android/VpnHood.AppLib.Ads.InMobi.Android.csproj'
 
     steps:
     - name: Checkout
