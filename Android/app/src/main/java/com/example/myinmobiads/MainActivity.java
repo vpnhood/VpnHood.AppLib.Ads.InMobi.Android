@@ -29,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         CompletableFuture<Void> initTask = InMobiAdServiceFactory.InitializeInMobi(this,
-                InMobiCredential.AccountId, true);
+                BuildConfig.INMOBI_ACCOUNT_ID, true);
         initTask.thenAccept(result -> {
-            _iInMobiAdProvider = InMobiAdServiceFactory.create(InMobiCredential.PlacementId);
+            _iInMobiAdProvider = InMobiAdServiceFactory.create(BuildConfig.INMOBI_PLACEMENT_ID);
             _iInMobiAdProvider.LoadAd(this).thenAccept(
                     result2 -> _iInMobiAdProvider.ShowAd(this).thenAccept(
                           result3 ->  Log.d("Test Message", "Test")

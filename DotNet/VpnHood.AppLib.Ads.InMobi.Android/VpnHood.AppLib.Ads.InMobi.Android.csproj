@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<Description>VpnHood Android Ad Library for InMobi</Description>
-		<TargetFramework>net10.0-android36.1</TargetFramework>
+		<TargetFramework>net11.0-android37.0</TargetFramework>
 		<SupportedOSPlatformVersion>24</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
@@ -31,13 +31,52 @@
 			<PackagePath></PackagePath>
 		</None>
 	</ItemGroup>
+
+	<!-- The InMobi SDK version has one home, the wrapper's version catalog: the wrapper compiles against
+	     it and this package ships it, so the two cannot drift apart. -->
+	<PropertyGroup>
+		<InMobiSdkVersion>$([System.Text.RegularExpressions.Regex]::Replace($([System.IO.File]::ReadAllText('$(MSBuildThisFileDirectory)..\..\Android\gradle\libs.versions.toml')), '(?s).*\binmobiAds = "([^"]+)".*', '$1'))</InMobiSdkVersion>
+	</PropertyGroup>
+
 	<ItemGroup>
-		<PackageReference Include="VpnHood.AppLib.Abstractions" Version="7.3.766" />
-		<PackageReference Include="VpnHood.Core.Client.Device.Android" Version="7.3.766" />
-		<PackageReference Include="Square.Picasso" Version="2.8.0.20" />
-		<PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.4.0.3" />
-		<PackageReference Include="Xamarin.AndroidX.Browser" Version="1.9.0" />
-		<PackageReference Include="Xamarin.AndroidX.ViewPager" Version="1.1.0.4" />
-		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Identifier" Version="118.2.0.4" />
+		<!-- The Java wrapper, built from ../../Android by Gradle on every build and bound: the one Java
+		     surface this library calls. -->
+		<AndroidGradleProject Include="..\..\Android\build.gradle.kts" ModuleName="VpnHood_InMobi_Ads" />
+		<!-- The InMobi SDK and its measurement SDK from Maven Central, shipped but not bound: only the
+		     wrapper talks to them. -->
+		<AndroidMavenLibrary Include="com.inmobi.monetization:inmobi-ads-kotlin" Version="$(InMobiSdkVersion)" Bind="false" />
+		<AndroidMavenLibrary Include="com.inmobi.omsdk:inmobi-omsdk" Version="1.5.7.0" Bind="false" />
+	</ItemGroup>
+
+	<!-- The binder drops the wrapper's package-private InMobiAdService, whose base type is the unbound
+	     SDK's listener, and says so with these two warnings. Nothing public is lost: the wrapper's public
+	     API uses only Android and Java types, and the C# here does not compile without it. Binding the
+	     SDK to silence them instead drops some 750 of its types with a warning each. -->
+	<PropertyGroup>
+		<NoWarn>$(NoWarn);BG8605;BG8606</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="VpnHood.AppLib.Abstractions" Version="8.2.853" />
+		<PackageReference Include="VpnHood.Core.Client.Devices.Android" Version="8.2.853" />
+	</ItemGroup>
+
+	<!-- What the InMobi SDK needs at runtime, from its POM. The POM declares these in Gradle's
+	     'implementation' scope, which the build's Java dependency check does not read, so this list is
+	     kept by hand. Backward-compatible libraries (AndroidX, Play services, Kotlin) are at their newest;
+	     OkHttp is on 5, which the Picasso binding requires and whose Java API stays compatible back to
+	     the SDK's 3.14; Media3 stays on the SDK's 1.4.1 (its unstable APIs change between minor
+	     versions) and Picasso on 2.8. -->
+	<ItemGroup>
+		<PackageReference Include="Square.OkHttp3" Version="5.5.0" />
+		<PackageReference Include="Square.Picasso" Version="2.8.0.23" />
+		<PackageReference Include="Xamarin.AndroidX.Browser" Version="1.10.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Core.Core.Ktx" Version="1.19.0.1" />
+		<PackageReference Include="Xamarin.AndroidX.Media3.ExoPlayer" Version="1.4.1.1" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Ads.Identifier" Version="118.3.0.3" />
+		<PackageReference Include="Xamarin.GooglePlayServices.AppSet" Version="116.1.0.11" />
+		<PackageReference Include="Xamarin.GooglePlayServices.Tasks" Version="118.4.1.3" />
+		<PackageReference Include="Xamarin.Kotlin.StdLib" Version="2.4.0.1" />
+		<PackageReference Include="Xamarin.KotlinX.Coroutines.Android" Version="1.11.0.1" />
 	</ItemGroup>
 </Project>

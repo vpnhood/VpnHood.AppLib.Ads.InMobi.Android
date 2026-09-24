@@ -1,15 +1,14 @@
 ﻿/.idea/
 /Android/.gradle/
+/Android/build/
 /Android/.idea/
 /Android/app/build/
 /Android/VpnHood_InMobi_Ads/build/
 /Android/local.properties
-/Android/app/src/main/java/com/example/myinmobiads/InMobiCredential.java
 /DotNet/.idea/
 /DotNet/.vs/
 /DotNet/SampleShowAd/bin/
 /DotNet/SampleShowAd/obj/
 /DotNet/VpnHood.AppLib.Ads.InMobi.Android/bin/
 /DotNet/VpnHood.AppLib.Ads.InMobi.Android/obj/
-/DotNet/SampleShowAd/InMobiCredential.cs
 /DotNet/SampleShowAd/SampleShowAd.csproj.user

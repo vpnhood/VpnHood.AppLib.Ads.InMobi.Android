@@ -1,6 +1,6 @@
 ﻿using Com.Vpnhood.Inmobi.Ads;
-using VpnHood.Core.Client.Device.Droid.Utils;
-using VpnHood.Core.Toolkit.Utils;
+using VpnHood.Core.Client.Devices.Android.Utils;
+using VpnHood.Net.Toolkit.Utils;
 
 namespace VpnHood.AppLib.Ads.InMobi.Android;
 
@@ -24,8 +24,9 @@ public class InMobiUtil
             return;
 
         // initialize
-        var initTask = await AndroidUtil.RunOnUiThread(activity,
-                () => InMobiAdServiceFactory.InitializeInMobi(activity, accountId, Java.Lang.Boolean.ValueOf(isDebugMode))!.AsTask())
+        var initTask = await AndroidUtils.RunOnUiThread(activity,
+                () => (InMobiAdServiceFactory.InitializeInMobi(activity, accountId, Java.Lang.Boolean.ValueOf(isDebugMode))
+                       ?? throw new InvalidOperationException("InMobi did not start its initialization.")).AsTask())
             .WaitAsync(cancellationToken)
             .ConfigureAwait(false);
 

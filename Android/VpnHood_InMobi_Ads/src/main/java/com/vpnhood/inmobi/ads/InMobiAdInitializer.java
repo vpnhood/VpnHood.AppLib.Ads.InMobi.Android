@@ -1,7 +1,5 @@
 package com.vpnhood.inmobi.ads;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -15,6 +13,7 @@ import org.json.JSONObject;
 import java.util.concurrent.CompletableFuture;
 
 class InMobiAdInitializer {
+    private static final String TAG = "VpnHoodInMobi";
 
     public static CompletableFuture<Void> Initialize(Context context, String accountId, Boolean isDebugMode) {
         CompletableFuture<Void> task = new CompletableFuture<>();

@@ -5,5 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 public interface IInMobiAdProvider {
     CompletableFuture<Void> LoadAd(Context context);
-    CompletableFuture<Void> ShowAd(Context context);
+
+    // completes with whether the user clicked the ad
+    CompletableFuture<Boolean> ShowAd(Context context);
 }

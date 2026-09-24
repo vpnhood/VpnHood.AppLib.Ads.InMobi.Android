@@ -1,35 +1,22 @@
 [versions]
-agp = "8.11.0"
-browser = "1.8.0"
-inmobiAdsKotlin = "10.7.7"
-junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-appcompat = "1.7.0"
-material = "1.12.0"
-activity = "1.9.0"
-constraintlayout = "2.1.4"
-picasso = "2.8"
-playServicesAdsIdentifier = "18.2.0"
-recyclerview = "1.3.2"
-viewpager = "1.1.0"
+# Gradle 9 needs the .NET 11 Android workload: .NET 10's builds this project through an init script
+# that Gradle 9's Kotlin DSL rejects.
+agp = "9.4.1"
+# The one InMobi SDK version: the wrapper compiles against it, and the .NET package reads it from
+# here to ship the same SDK from Maven (VpnHood.AppLib.Ads.InMobi.Android.csproj).
+inmobiAds = "11.4.1"
+activity = "1.13.0"
+appcompat = "1.8.0"
+constraintlayout = "2.2.2"
+material = "1.14.0"
 
 [libraries]
-browser = { module = "androidx.browser:browser", version.ref = "browser" }
-inmobi-ads-kotlin = { module = "com.inmobi.monetization:inmobi-ads-kotlin", version.ref = "inmobiAdsKotlin" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+inmobi-ads-kotlin = { module = "com.inmobi.monetization:inmobi-ads-kotlin", version.ref = "inmobiAds" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
-play-services-ads-identifier = { module = "com.google.android.gms:play-services-ads-identifier", version.ref = "playServicesAdsIdentifier" }
-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
-viewpager = { module = "androidx.viewpager:viewpager", version.ref = "viewpager" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-

@@ -1,7 +1,6 @@
 package com.vpnhood.inmobi.ads;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import com.inmobi.ads.AdMetaInfo;
@@ -11,15 +10,15 @@ import com.inmobi.ads.listeners.InterstitialAdEventListener;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.logging.Logger;
 
 class InMobiAdService extends InterstitialAdEventListener implements IInMobiAdProvider {
 
     private InMobiInterstitial _interstitialAd;
     public final Long _placementId;
     public CompletableFuture<Void> _loadTask;
-    public CompletableFuture<Void> _showTask;
-    private boolean isAdImpression = false;
+    public CompletableFuture<Boolean> _showTask;
+    private boolean _isAdImpression = false;
+    private boolean _isClicked = false;
 
     public InMobiAdService(Long placementId){
         _placementId = placementId;
@@ -34,7 +33,7 @@ class InMobiAdService extends InterstitialAdEventListener implements IInMobiAdPr
     }
 
     @Override
-    public CompletableFuture<Void> ShowAd(Context context) {
+    public CompletableFuture<Boolean> ShowAd(Context context) {
         _showTask = new CompletableFuture<>();
         _interstitialAd.show();
         return _showTask;
@@ -47,48 +46,36 @@ class InMobiAdService extends InterstitialAdEventListener implements IInMobiAdPr
 
     @Override
     public void onAdLoadFailed(@NonNull InMobiInterstitial ad, @NonNull InMobiAdRequestStatus status) {
-        _loadTask.completeExceptionally(new Throwable(status.getMessage()));
+        // the status code leads the message: .NET receives only this text and tells a no-fill (NO_FILL) by it
+        _loadTask.completeExceptionally(new Exception(status.getStatusCode().name() + ": " + status.getMessage()));
     }
 
     @Override
-    public void onAdFetchSuccessful(@NonNull InMobiInterstitial ad, @NonNull AdMetaInfo info) {
-    }
-
-    @Override
-    public void onAdClicked(@NonNull InMobiInterstitial ad, Map< Object, Object > params) {
-    }
-
-    @Override
-    public void onAdWillDisplay(@NonNull InMobiInterstitial ad) {
-    }
-
-    @Override
-    public void onAdDisplayed(@NonNull InMobiInterstitial ad, @NonNull AdMetaInfo info) {
+    public void onAdClicked(@NonNull InMobiInterstitial ad, Map<Object, Object> params) {
+        _isClicked = true;
     }
 
     @Override
     public void onAdDisplayFailed(@NonNull InMobiInterstitial ad) {
-        _showTask.completeExceptionally(new Throwable("Ad display failed."));
+        _showTask.completeExceptionally(new Exception("Ad display failed."));
     }
 
     @Override
     public void onAdDismissed(@NonNull InMobiInterstitial ad) {
-        if (isAdImpression)
-            _showTask.complete(null);
+        if (_isAdImpression || _isClicked)
+            _showTask.complete(_isClicked);
         else
-            _showTask.completeExceptionally(new Throwable("Ad dismissed before impression."));
-
+            _showTask.completeExceptionally(new Exception("Ad dismissed before impression."));
     }
 
     @Override
     public void onUserLeftApplication(@NonNull InMobiInterstitial ad) {
-        _showTask.completeExceptionally(new Throwable("User left application."));
+        // a tap that opened the ad's target outside the app: the ad stays up and is dismissed when the user returns
+        _isClicked = true;
     }
-
 
     @Override
     public void onAdImpression(@NonNull InMobiInterstitial ad) {
-        isAdImpression = true;
+        _isAdImpression = true;
     }
-
 }

@@ -1,0 +1,6 @@
+# The Linux start script runs on the CI runner: LF, or the shell rejects it
+/gradlew        text eol=lf
+# Windows script files
+*.bat           text eol=crlf
+# Binary files are left untouched
+*.jar           binary

@@ -11,6 +11,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -20,5 +21,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "My InMobi Ads"
-include ':app'
-include ':VpnHood_InMobi_Ads'
+include(":app")
+include(":VpnHood_InMobi_Ads")
