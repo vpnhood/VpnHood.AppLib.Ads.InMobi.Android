@@ -33,11 +33,11 @@ public class MainActivity : ActivityEvent
     }
 
     // The ids live in the private .user folder beside this repo, one value per file
-    // (.user/ad/InMobi); the csproj embeds each one by its file name.
+    // (.user/vendors/inmobi); the csproj embeds each one by its file name.
     private static string ReadUserValue(string fileName)
     {
         using var stream = typeof(MainActivity).Assembly.GetManifestResourceStream(fileName)
-            ?? throw new InvalidOperationException($"{fileName} is missing. Put it in .user/ad/InMobi beside this repo.");
+            ?? throw new InvalidOperationException($"{fileName} is missing. Put it in .user/vendors/inmobi beside this repo.");
         using var reader = new StreamReader(stream);
         return reader.ReadToEnd().Trim();
     }

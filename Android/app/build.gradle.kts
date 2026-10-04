@@ -2,10 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
-// The ad ids, one value per file in the private .user folder beside this repo (.user/ad/InMobi),
+// The ad ids, one value per file in the private .user folder beside this repo (.user/vendors/inmobi),
 // never in git. A missing file gives an empty value rather than a failed build: the .NET build
 // configures this module too, on machines without .user.
-val inMobiUserDir = rootDir.resolve("../../.user/ad/InMobi")
+val inMobiUserDir = rootDir.resolve("../../.user/vendors/inmobi")
 fun inMobiUserValue(fileName: String): String =
     inMobiUserDir.resolve(fileName).takeIf { it.exists() }?.readText()?.trim() ?: ""
 

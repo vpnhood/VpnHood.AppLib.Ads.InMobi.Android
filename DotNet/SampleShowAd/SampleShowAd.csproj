@@ -15,12 +15,12 @@
 	</ItemGroup>
 
 	<!-- The ad ids, one value per file in the private .user folder beside this repo
-	     (.user/ad/InMobi): embedded by file name, never in git. -->
+	     (.user/vendors/inmobi): embedded by file name, never in git. -->
 	<PropertyGroup>
 		<VhUserDir Condition="'$(VhUserDir)' == ''">$(MSBuildThisFileDirectory)..\..\..\.user</VhUserDir>
 	</PropertyGroup>
 	<ItemGroup>
-		<EmbeddedResource Include="$(VhUserDir)\ad\InMobi\*.txt" LogicalName="%(Filename)%(Extension)" Visible="false" />
+		<EmbeddedResource Include="$(VhUserDir)\vendors\inmobi\*.txt" LogicalName="%(Filename)%(Extension)" Visible="false" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">
